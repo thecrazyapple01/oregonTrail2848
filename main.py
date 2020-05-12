@@ -18,22 +18,42 @@ def DistancesofCities():
   return distances
 
 class Character:
+  #atributes of our braves heroes
   def __init__(self, food, life, daystrav, stamina):
     self.food = food
     self.life = life
     self.daystrav = daystrav
     self.stamina = stamina
 
+  #another day passes
   def DayPass(self, foodperday):
     self.food -= foodperday #loses some food as a day passes
-    return self.food
+    self.stamina -= 1 #traveling is tiring even in 2848
+    self.daystrav += 1
+    return self
 
+  #checks if players is still alive
   def DeadPlayer(self):
-    return 0 if player.food or player.stamina == 0 else 1
-player = Character(100, 1,0, 10) # the player starts with 100 food and one life (Yolo) in point 0
+    return 0 if (player.food == 0) or (player.stamina == 0) else 1
+
+  #resting is good for your welbeing
+  #increases you stamina, some time passes, you eat some food
+  def RestInTown(self, foodperday):
+    self.daystrav += 1 #another day passes while resting
+    self.stamina  += 3 #stamina regained resting
+    self.food -= foodperday
+    return self
+
+  def RestInField(self, foodperday):
+    self.daystrav += 1 #another day passes while resting
+    self.stamina  += 2 #stamina regained resting
+    self.food -= foodperday
+    return self
+  
+player = Character(100, 1,0, 10) # food, life, daystrav, stamina
 townloc = DistancesofCities() #generates the list with town locations from starting point
 checkpoint = 0 #the index of the next city visited to be visited
-dailyfood = 10
+foodperday = 10
 
 print("You have found an old map! The cities are located at these distances from your location: ")
 print("Beware! You are not made of iron. You lose 1 stamina for everyday spent travelling, and you gain 2 stamina back \
@@ -44,28 +64,25 @@ while True:
   if player.DeadPlayer() != 0:
     print("Day ", player.daystrav ,". You have ",player.food," food left and ", player.life, "lifepoints. You have already travelled ",player.daystrav\
       ,"days. \n You have stamina to travel for another: ",player.stamina,"days.")
-    userInput = input("Press enter to reach a new day ") 
+    userInput = input("Press enter to reach a new day or if you feel tired you can get some rest by pressing s: ") 
+    if userInput == 's' or 'S':
+      player = player.RestInField(foodperday)
     if userInput == '':
-      player.food = player.DayPass(dailyfood) # you need some food to get by
-      player.daystrav += 1 #only one day passed
-      player.stamina -= 1 #travel is tiring, even in 2848
+      player = player.DayPass(foodperday)
       if townloc[checkpoint] == player.daystrav:
         print("You have reached a new town!")
         print("Press S if you want to rest here for some time, but beware! You only have food left for "\
-          ,player.food // dailyfood,"days")
+          ,player.food // foodperday,"days")
         userInput = input()
         if userInput == 's' or 'S':
-          player.daystrav += 1
-          player.stamina += 2 # you get some stamina resting
+          player = player.RestInTown(foodperday)
         player.food += 10 #food collected from the town
         checkpoint += 1 #another town waits for you at the horizon
       if checkpoint == len(townloc):
         print("Congratulations! You have reached your destination!")
         break
   else:
-    player.life -= 1
-    if player.life == 0:
-      print("Your life reached zero. You died. Please desintall this game as you are not worthy to play\
+      print("Your life reached zero. You died. Please unintall this game as you are not worthy to play\
         it ever again. Return to your boring games, loser.")
       break
 
