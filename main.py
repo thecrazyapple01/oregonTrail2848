@@ -63,7 +63,8 @@ print(townloc)
 while True:
   if player.DeadPlayer() != 0:
     print("Day ", player.daystrav ,". You have ",player.food," food left and ", player.life, "lifepoints. You have already travelled ",player.daystrav\
-      ,"days. \n You have stamina to travel for another: ",player.stamina,"days.")
+      ,"days. \n You have stamina to travel for another: ",player.stamina,"days."\
+        " You'll reach the next town in: ",townloc[checkpoint] - player.daystrav," days")
     userInput = input("Press enter to reach a new day or if you feel tired you can get some rest by pressing s: ") 
     if userInput == 's' or 'S':
       player = player.RestInField(foodperday)
