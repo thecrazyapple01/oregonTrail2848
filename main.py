@@ -1,5 +1,9 @@
 import pygame as pg
 
+pg.init()
+
+# some code here
+
 height_px = 600
 width_px = 500
 reso = (height_px, width_px)
