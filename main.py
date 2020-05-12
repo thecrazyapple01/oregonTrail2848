@@ -1,10 +1,12 @@
 import pygame as pg
 
+height_px = 600
+width_px = 500
+reso = (height_px, width_px)
+
 pg.init()
 
-# some code here
+screen = pg.display.set_mode(reso)
 
 pg.quit()
 
-print("Test NOU de commit in frontend")
-print("Salut, Andrei!")
