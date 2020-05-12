@@ -1,6 +1,7 @@
 '''Oregon Trail BackEnd'''
 
 import sys
+import random
 
 #function which is closes the program
 def ProgramClosing():
@@ -24,14 +25,17 @@ t = 1
 
 while True:
   if player.food != 0:
-    print("Day ", t,". You have ",player.food," food left.")
-    userInput = input("Press enter to reach a new day")
+    print("Day ", t,". You have ",player.food," food left and ", player.life, "lifepoints.")
+    userInput = input("Press enter to reach a new day ")
     if userInput == '':
       player.food = player.DayPass()
       t += 1
   else:
-    print("You died.")
-    break
+    player.life -= 1
+    if player.life == 0:
+      print("Your life reached zero. You died. Please desintall this game as you are not worthy to play\
+        it ever again, loser.")
+      break
 
 ProgramClosing()
 
