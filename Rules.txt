@@ -1,0 +1,7 @@
+Welcome, stranger! 
+The rules are:
+You eat 10 food per day
+You lose 1 stamina per day if you travel
+You get 2 days per day resting in the field 
+You get 3 stamina per day resting in a town
+If you reach a town you get 10 food

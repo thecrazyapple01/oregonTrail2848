@@ -1,4 +1,4 @@
-'''Oregon Trail BackEnd'''
+'''The Oregon Trail BackEnd'''
 
 import sys
 import random
@@ -17,12 +17,17 @@ def DistancesofCities():
   distances.sort()
   return distances
 
+def PricesInTown(nbcities):
+  prices = random.sample(range(5,50),nbcities)
+  return prices
+
 class Character:
   #atributes of our braves heroes
-  def __init__(self, food, life, daystrav, stamina):
+  def __init__(self, food, life, daystrav, stamina, money):
     self.food = food
     self.life = life
     self.daystrav = daystrav
+    self.money = money
     self.stamina = stamina
 
   #another day passes
@@ -50,6 +55,15 @@ class Character:
     self.food -= foodperday
     return self
   
+ #function for when the player reaches the town
+ # it prints some messages, lets him know what he can in this new town
+ # gets some info (e.g. the prices in the town)
+def ActionsInTown(checkpoint, prices):
+  print("You have reached a new town!")
+  print("Press S if you want to rest here for some time, but beware! You only have food left for "\
+    ,player.food // foodperday,"days")
+  print("The merchants in this town will sell you some food for ", ,"enemy skalps")
+
 player = Character(100, 1,0, 10) # food, life, daystrav, stamina
 townloc = DistancesofCities() #generates the list with town locations from starting point
 checkpoint = 0 #the index of the next city visited to be visited
@@ -74,10 +88,10 @@ while True:
         print("You have reached a new town!")
         print("Press S if you want to rest here for some time, but beware! You only have food left for "\
           ,player.food // foodperday,"days")
+        print("The merchants in this town will sell you some food for ", ,"enemy skalps")
         userInput = input()
         if userInput == 's' or 'S':
           player = player.RestInTown(foodperday)
-        player.food += 10 #food collected from the town
         checkpoint += 1 #another town waits for you at the horizon
       if checkpoint == len(townloc):
         print("Congratulations! You have reached your destination!")
