@@ -1,2 +1,5 @@
 # oregonTrail2848
-Joc
+
+
+Acesta este un test
+Nu lua in considerare
