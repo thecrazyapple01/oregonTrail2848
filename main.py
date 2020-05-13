@@ -69,12 +69,11 @@ class Character:
 def ActionsInTown(player, checkpoint, prices):
   print("You have reached a new town!")
   print("You only have food left for "\
-    ,player.food // foodperday,"days.\n You have energy to travel for another ",player.stamina" days))
+    ,player.food // foodperday,"days.\n You have energy to travel for another ",player.stamina," days)")
   print("The merchants in this town will sell you some food for ", prices[checkpoint] ,"enemy skalps per unit of food\n")
   print("The following actions are available in this town:\n" \
-    "1. Rest (press S) - you regain some stamina. The rent is ",rent[checkpoint,\
-      "2. Buy some food - press B"])
-    return 0
+    "1. Rest (press S) - you regain some stamina. The rent is ",rent[checkpoint],\
+      "2. Buy some food - press B")
 
 #function to buy food, gets the idx of the city, the price list, the player class
 #and the quantity of food the players wants to buy
@@ -84,12 +83,13 @@ def BuyingFood(player, checkpoint, prices, amount):
   player.food += amount 
   return player
 
-player = Character(100, 1,0, 10) # food, life, daystrav, stamina
+player = Character(100, 1,0,0, 10,100) # food, life, daystrav, stamina
 townloc = DistancesofCities() #generates the list with town locations from starting point
+nbcities = len(townloc)
 checkpoint = 0 #the index of the next city visited to be visited
 foodperday = 10
-prices = PricesInTown()
-rent = RentInTown()
+prices = PricesInTown(nbcities)
+rent = RentInTown(nbcities)
 
 print("You have found an old map! The cities are located at these distances from your location: ")
 print("Beware! You are not made of iron. You lose 1 stamina for everyday spent travelling, and you gain 2 stamina back \
@@ -100,7 +100,7 @@ while True:
 
   if player.DeadPlayer() != 0: #checks if game can continue
 
-    print("Day ", player.dayspassed". You have travelled so far ",player.daystrav. " days.\n" ,". You have ",player.food\
+    print("Day ", player.dayspassed,". You have travelled so far ",player.daystrav, " days.\n" ,". You have ",player.food\
       ," food left and ", player.life, "lifepoints. You have already travelled ",player.daystrav\
       ,"days. \n You have stamina to travel for another: ",player.stamina,"days."\
         " You'll reach the next town in: ",townloc[checkpoint] - player.daystrav," days")
@@ -127,8 +127,8 @@ while True:
           ok = False
           while ok == False:
             amount = input("How much food do you want to buy? ")
-            if amount * price[checkpoint] <= player.money: # CUM SE POATE ADAUGA VERIFICAREA ASTA LA FUNCTIE OARE?
-              player = player.BuyingFood(foodperday, player)
+            if amount * prices[checkpoint] <= player.money: # CUM SE POATE ADAUGA VERIFICAREA ASTA LA FUNCTIE OARE?
+              player = BuyingFood(foodperday, player, prices, amount)
               ok = True #break
             
 
