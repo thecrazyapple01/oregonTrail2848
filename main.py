@@ -2,6 +2,14 @@
 
 import sys
 import random
+import numpy as np
+
+#import the classes and functions libraries
+import classes
+import functions
+
+#import the blackjack library
+import blackjack
 
 #function which closes the program
 def ProgramClosing():
@@ -10,59 +18,7 @@ def ProgramClosing():
         print('Closing program...')
         sys.exit()
 
-#function which returns a random number of cities at random distances
-def DistancesofCities():
-  nbcities = random.randint(3, 5) #between 3 and 5 cities
-  distances = random.sample(range(2,15), nbcities) #min distance 5 km, max distance 100 km
-  distances.sort()
-  return distances
 
-#determines the price for food and rent in every town
-def PricesInTown(nbcities):
-  prices = random.sample(range(5,50),nbcities)
-  return prices
-
-def RentInTown(nbcities):
-  prices = random.sample(range(5,50),nbcities)
-  return prices
-
-class Character:
-  #atributes of our braves heroes
-  def __init__(self, food, life, daystrav, stamina, money, dayspassed):
-    self.food = food
-    self.life = life
-    self.daystrav = daystrav
-    self.money = money
-    self.stamina = stamina
-    self.dayspassed = dayspassed
-
-  #another day passes
-  def DayPass(self, foodperday):
-    self.food -= foodperday #loses some food as a day passes
-    self.stamina -= 1 #traveling is tiring even in 2848
-    self.daystrav += 1
-    self.dayspassed += 1
-    return self
-
-  #checks if players is still alive
-  def DeadPlayer(self):
-    return 0 if (player.food == 0) or (player.stamina == 0) else 1
-
-  #resting is good for your welbeing
-  #increases you stamina, some time passes, you eat some food
-  def RestInTown(self, foodperday, checkpoint, prices):
-    self.dayspassed += 1 #another day passes while resting
-    self.stamina  += 3 #stamina regained resting
-    self.food -= foodperday
-    return self
-
-  #ARE NEVOIE DE ASIGURARE (PROB CEVA TRY EXCEPT) IN CAZUL IN CARE NU ARE DESTUI BANI FRAIERUL
-  def RestInField(self, foodperday):
-    self.dayspassed += 1 #another day passes while resting
-    self.stamina  += 2 #stamina regained resting
-    self.food -= foodperday
-    return self
-  
  #function for when the player reaches the town
  # it prints some messages, lets him know what he can in this new town
  # gets some info (e.g. the prices in the town)
@@ -75,15 +31,8 @@ def ActionsInTown(player, checkpoint, prices):
     "1. Rest (press S) - you regain some stamina. The rent is ",rent[checkpoint],\
       "2. Buy some food - press B")
 
-#function to buy food, gets the idx of the city, the price list, the player class
-#and the quantity of food the players wants to buy
-#returns the player class with modified values for food, money
-def BuyingFood(player, checkpoint, prices, amount):
-  player.money -= prices[checkpoint] * amount
-  player.food += amount 
-  return player
 
-player = Character(100, 1,0,0, 10,100) # food, life, daystrav, stamina
+player = Character() # food, life, daystrav, stamina
 townloc = DistancesofCities() #generates the list with town locations from starting point
 nbcities = len(townloc)
 checkpoint = 0 #the index of the next city visited to be visited
