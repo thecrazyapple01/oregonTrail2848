@@ -13,4 +13,4 @@ pg.init()
 screen = pg.display.set_mode(reso)
 
 pg.quit()
-
+print("Yo mamma")
